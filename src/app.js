@@ -20,9 +20,14 @@ io.on('connection', (socket) => {
   console.log("Connected");
   socket.on('join-room', () => {
     console.log("user joined room");
-    // socket.join(roomId);
-    // socket.to(roomId).broadcast.emit('user-connected');
+    socket.on('uuid', (roomId) => {
+      console.log(roomId);
+      socket.join(roomId);
+      socket.to(roomId).emit('user-connected');
+    })
+    
   })
+
 })
 
 app.get('/', (req, res) => {
