@@ -15,21 +15,18 @@ const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
-app.use(express.static('public'));
 
-app.set('view engine', 'ejs');
 io.on('connection', (socket) => {
-  socket.on('join-room', () => {
-    console.log("user joined room"); 
+  console.log("Connected");
+  socket.on('join-room', (roomId) => {
+    console.log("user joined room");
+    socket.join(roomId);
+    socket.to(roomId).broadcast.emit('user-connected');
   })
 })
 
 app.get('/', (req, res) => {
-  res.redirect(`/${uuidv4()}`)
-})
-
-app.get('/:room', (req, res, next) => {
-  res.render('room', { roomId: req.params.room });
+  res.status(200).send("Hello world");
 })
 
 app.use(function errorHandler(error, req, res, next) {
