@@ -16,11 +16,17 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
+const availableRooms = [];
+
 io.on('connection', (socket) => {
   console.log("Connected");
   socket.on('join-room', () => {
     console.log("user joined room");
     socket.on('uuid', (roomId) => {
+      if (!availableRooms.includes(roomId)) {
+        availableRooms.push(roomId);
+      }
+      
       console.log(roomId);
       socket.join(roomId);
       socket.to(roomId).emit('user-connected');
@@ -32,6 +38,16 @@ io.on('connection', (socket) => {
 
 app.get('/', (req, res) => {
   res.status(200).send("Hello world");
+})
+
+app.get('/rooms', (req, res, next) => {
+  const { room_id } = req.headers;
+  console.log(room_id)
+  if (availableRooms.includes(room_id)) {
+    res.status(200).send(true);
+  } else {
+    res.status(404).send(false);
+  }
 })
 
 app.use(function errorHandler(error, req, res, next) {
