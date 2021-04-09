@@ -13,8 +13,10 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
+app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.render('room')
 })
 
 app.use(function errorHandler(error, req, res, next) {
