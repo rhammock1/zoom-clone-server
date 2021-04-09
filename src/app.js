@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
-require('dotenv').config();
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
@@ -16,7 +17,11 @@ app.use(cors());
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.render('room')
+  res.redirect(`/${uuidv4()}`)
+})
+
+app.get('/:room', (req, res, next) => {
+  res.render('room', { roomId: req.params.room });
 })
 
 app.use(function errorHandler(error, req, res, next) {
