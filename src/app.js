@@ -19,7 +19,9 @@ app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 io.on('connection', (socket) => {
-
+  socket.on('join-room', () => {
+    console.log("user joined room"); 
+  })
 })
 
 app.get('/', (req, res) => {

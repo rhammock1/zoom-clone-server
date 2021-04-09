@@ -1,3 +1,4 @@
+const socket = io('/');
 const myVideo = document.createElement('video');
 const videoGrid = document.getElementById('video-grid');
 
@@ -13,6 +14,8 @@ navigator.mediaDevices.getUserMedia({   // Get video and audio from Chrome
 
     addVideoStream(myVideo, stream);
 })
+
+socket.emit('join-room');
 
 const addVideoStream = (video, stream) => {
     video.srcObject = stream;
