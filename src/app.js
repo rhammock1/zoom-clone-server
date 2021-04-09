@@ -18,10 +18,10 @@ app.use(cors());
 
 io.on('connection', (socket) => {
   console.log("Connected");
-  socket.on('join-room', (roomId) => {
+  socket.on('join-room', () => {
     console.log("user joined room");
-    socket.join(roomId);
-    socket.to(roomId).broadcast.emit('user-connected');
+    // socket.join(roomId);
+    // socket.to(roomId).broadcast.emit('user-connected');
   })
 })
 
