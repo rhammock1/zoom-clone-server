@@ -4,11 +4,17 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
-const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+io.listen(8081)
+const { ExpressPeerServer } = require('peer');
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+});
+
+app.use('/peerjs', peerServer);
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 
@@ -16,21 +22,24 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
+
+
 const availableRooms = [];
 
 io.on('connection', (socket) => {
   console.log("Connected");
-  socket.on('join-room', () => {
+  socket.on('join-room', (roomId, userId) => {
     console.log("user joined room");
-    socket.on('uuid', (roomId) => {
-      if (!availableRooms.includes(roomId)) {
-        availableRooms.push(roomId);
-      }
+    if (!availableRooms.includes(roomId)) {
+      availableRooms.push(roomId);
+    }
+    
+    console.log("line 37 server: ", roomId);
+    socket.join(roomId);
+    socket.to(roomId).emit('user-connected', userId);
+    // socket.on('uuid', (roomId) => {
       
-      console.log(roomId);
-      socket.join(roomId);
-      socket.to(roomId).emit('user-connected');
-    })
+    // })
     
   })
 
