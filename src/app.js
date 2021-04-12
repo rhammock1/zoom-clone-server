@@ -9,11 +9,15 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 io.listen(IO_PORT);
-const { ExpressPeerServer } = require('peer');
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-  secure: (NODE_ENV === 'production') ? true : false,
-});
+const { PeerServer } = require('peer');
+const peerServer = PeerServer({
+  port: 8082,
+  path: '/peerjs',
+})
+// const peerServer = ExpressPeerServer(server, {
+//   debug: true,
+//   secure: (NODE_ENV === 'production') ? true : false,
+// });
 
 app.use('/peerjs', peerServer);
 
