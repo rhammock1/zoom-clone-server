@@ -12,7 +12,7 @@ io.listen(IO_PORT);
 const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
   debug: true,
-  port: (NODE_ENV === 'production') ? 443 : 8080,
+  port: 8080,
   secure: (NODE_ENV === 'production') ? true : false,
 });
 
