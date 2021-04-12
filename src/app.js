@@ -8,7 +8,7 @@ const { NODE_ENV, IO_PORT } = require('./config');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-io.listen(IO_PORT);
+(NODE_ENV === 'development') ? io.listen(IO_PORT) : null;
 const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
   debug: true,
