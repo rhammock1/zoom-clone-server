@@ -8,14 +8,14 @@ const { NODE_ENV, IO_PORT } = require('./config');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-io.listen(IO_PORT);
-const { ExpressPeerServer } = require('peer');
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-  secure: (NODE_ENV === 'production') ? true : false,
-});
+// io.listen(IO_PORT);
+// const { ExpressPeerServer } = require('peer');
+// const peerServer = ExpressPeerServer(server, {
+//   debug: true,
+//   secure: (NODE_ENV === 'production') ? true : false,
+// });
 
-app.use('/peerjs', peerServer);
+// app.use('/peerjs', peerServer);
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 
@@ -38,9 +38,6 @@ io.on('connection', (socket) => {
     console.log("line 37 server: ", roomId);
     socket.join(roomId);
     socket.to(roomId).emit('user-connected', userId);
-    // socket.on('uuid', (roomId) => {
-      
-    // })
     
   })
 
@@ -71,4 +68,4 @@ app.use(function errorHandler(error, req, res, next) {
   res.status(500).json(response);
 })
 
-module.exports = { app, server };
+module.exports = { app, server, io };
