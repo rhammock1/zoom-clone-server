@@ -8,22 +8,12 @@ const { NODE_ENV, IO_PORT } = require('./config');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-// io.listen(IO_PORT);
-// const { ExpressPeerServer } = require('peer');
-// const peerServer = ExpressPeerServer(server, {
-//   debug: true,
-//   secure: (NODE_ENV === 'production') ? true : false,
-// });
-
-// app.use('/peerjs', peerServer);
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
-
-
 
 const availableRooms = [];
 
@@ -68,4 +58,4 @@ app.use(function errorHandler(error, req, res, next) {
   res.status(500).json(response);
 })
 
-module.exports = { app, server, io };
+module.exports = { app, server };
