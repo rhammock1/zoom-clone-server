@@ -3,12 +3,12 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-const { NODE_ENV } = require('./config');
+const { NODE_ENV, IO_PORT } = require('./config');
 
 const app = express();
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
-io.listen(8081)
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+io.listen(IO_PORT);
 const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
   debug: true,
