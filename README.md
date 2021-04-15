@@ -1,3 +1,25 @@
+# Zoom Clone Server
+
+Hosted [here](https://zoom-clone-client.vercel.app/)
+
+Peer Server [here](https://github.com/rhammock1/zoom-peer-server)
+Client [here](https://github.com/rhammock1/zoom-clone-client)
+
+Server side built with Node, Express, Socket.io
+
+## Documentation
+Peer server is on another repo. This server only has two accessible endpoint
+
+'/' GET (just a test endpoint to make sure its working properly)
+Response: 200 ok
+```
+    'Hello world'
+```
+
+/rooms GET - include 'room_id' as header to determine if that room_id is being used
+Response: 200 ok sends true
+Response: 404 sends false
+
 # Plan of Action
 
 - init project
@@ -9,34 +31,3 @@
 - add instant messaging 
 - add mute button
 - add stop video button
-
-
-Using Socket.io, Node.js, Peer.js, EJS, UUID, Express
-
-
-# Express Boilerplate!
-
-This is a boilerplate project used for starting new projects!
-
-## Set up
-
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
-
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
-
-## Scripts
-
-Start the application `npm start`
-
-Start nodemon for the application `npm run dev`
-
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
