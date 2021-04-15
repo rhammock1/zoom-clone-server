@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-const { NODE_ENV, IO_PORT } = require('./config');
+const { NODE_ENV } = require('./config');
 
 const app = express();
 const server = require('http').Server(app);
@@ -58,4 +58,4 @@ app.use(function errorHandler(error, req, res, next) {
   res.status(500).json(response);
 })
 
-module.exports = { app, server };
+module.exports = { server };
